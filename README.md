@@ -28,7 +28,7 @@ python inference.py --image_mean <mean> --image_stddev <stddev> --image_path <ra
 
 python extractor.py <input_path.npz> <output_path.npy>
 ```
-This process, especially when using large subvolumes, can be long. Instead, I have produced an end-to-end pipeline that simply requires an input file of the subvolume and an output directory. To use it, call:
+This process, especially when using large subvolumes, can be long. Instead, I have produced an end-to-end pipeline that simply requires an input file containing the entire raw volume and an output directory. To use it, call:
 ```bash
 bash inference.sh <input_volume> <output_dir>
 ```

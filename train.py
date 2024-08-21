@@ -260,7 +260,7 @@ def train_FFN(model):
             loss.backward()
             optimizer.step()
             
-            if step % 5000 == 0:
+            if step % 50000 == 0:
                 end = time()
                 logging.info('sec per iter: %f, index: %d', (time()-start)/100, index)
                 eval_tracker.plot(step, loss_100)
@@ -268,7 +268,7 @@ def train_FFN(model):
                 logging.info('loss: %f', loss_100/100)
                 loss_100 = 0
                 
-            if step % 50000 == 0:
+            if step % 500000 == 0:
                 logging.info('saving model...')
                 t.save(model.state_dict(), FLAGS.checkpoints + str(index) + '_' + str(step) + '.pkl')
                 logging.info('save success!')

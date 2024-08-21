@@ -26,7 +26,7 @@ ogheight=${shape[1]//[(),]/}
 ogwidth=${shape[2]//[(),]/}
 
 # Run the vol_inf.py script with the computed shape
-python vol_inf.py --input_file="${input_file}" --output_dir="${output_dir}"
+python volume_inference.py --input_file="${input_file}" --output_dir="${output_dir}"
 
 # Create a directory to store intermediate numpy results
 int_results="${output_dir}/int_results"

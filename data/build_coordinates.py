@@ -27,7 +27,7 @@ flags.DEFINE_list('partition_volumes', ['af:../CREMI/af_C.h5:af'],
 flags.DEFINE_string('coordinate_output', '../CREMI/coordinates_file_C.npy',
                     'Path to a .npz file in which to save the '
                     'coordinates.')
-flags.DEFINE_list('margin', [32,42,42], '(z, y, x) tuple specifying the '
+flags.DEFINE_list('margin', [41,41,41], '(z, y, x) tuple specifying the '
                   'number of voxels adjacent to the border of the volume to '
                   'exclude from sampling. This should normally be set to the '
                   'radius of the FFN training FoV (i.e. network FoV radius '

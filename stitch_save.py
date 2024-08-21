@@ -257,7 +257,8 @@ def main(input_dir, output_tiff_path, original_shape, tile_shape):
     logging.info(f"Stitched result shape: {stitched_result.shape}")
 
     # Merge instances across stitches
-    stitched_result = merge_across_stitches(stitched_result, tile_shape)
+    if args.merge_labels:
+        stitched_result = merge_across_stitches(stitched_result, tile_shape)
 
     # Save slices to temporary files
     merge_and_save_slices_to_temp(stitched_result, temp_dir)
@@ -279,6 +280,7 @@ def parse_args():
     parser.add_argument('output_tiff_path', type=str, help='Path to save the output TIFF file')
     parser.add_argument('--original_shape', type=int, nargs=3, required=True, help='Original shape of the full dataset (depth, height, width)')
     parser.add_argument('--tile_shape', type=int, nargs=3, required=True, help='Shape of each tile (depth, height, width)')
+    parser.add_argument('--merge_labels', default=False, help='Shape of each tile (depth, height, width)')
     return parser.parse_args()
 
 if __name__ == "__main__":

@@ -40,8 +40,8 @@ flags.DEFINE_string('checkpoints', 'checkpoints/originalFFN/basic11/', 'save che
 flags.DEFINE_string('starting_model', '3month/2451971_1300000.pkl', 'initial model to start training from')
 
 flags.DEFINE_integer('batch_size', 16, 'batchsize')
-flags.DEFINE_integer('max_epochs', 1, 'epoch')
-flags.DEFINE_integer('max_steps', 7000000, 'maxstep')
+flags.DEFINE_integer('max_epochs', 50, 'epoch')
+flags.DEFINE_integer('max_steps', 10000000, 'maxstep')
 flags.DEFINE_list('fov_size', [33, 33, 33], 'fovsize_zyx')
 flags.DEFINE_list('deltas', [8, 8, 8], 'deltas_zyx')
 

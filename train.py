@@ -37,6 +37,7 @@ flags.DEFINE_string('label_volumes',
                     'FIB-25/train_sample/groundtruth.h5:/volumes/labels/neuron_ids',
                     'groundtruth')
 flags.DEFINE_string('checkpoints', 'checkpoints/originalFFN/basic11/', 'save checkpoints')
+flags.DEFINE_string('starting_model', '3month/2451971_1300000.pkl', 'initial model to start training from')
 
 flags.DEFINE_integer('batch_size', 16, 'batchsize')
 flags.DEFINE_integer('max_epochs', 1, 'epoch')
@@ -54,7 +55,7 @@ max_index = 0
 
 def load_network(network):
     logging.info('loading checkpoints...')
-    save_path = '3month/2451971_1300000.pkl'
+    save_path = FLAGS.starting_model
     state_dict = t.load(save_path)
     # create new OrderedDict that does not contain `module.`
     from collections import OrderedDict

@@ -280,7 +280,7 @@ def parse_args():
     parser.add_argument('output_tiff_path', type=str, help='Path to save the output TIFF file')
     parser.add_argument('--original_shape', type=int, nargs=3, required=True, help='Original shape of the full dataset (depth, height, width)')
     parser.add_argument('--tile_shape', type=int, nargs=3, required=True, help='Shape of each tile (depth, height, width)')
-    parser.add_argument('--merge_labels', default=False, help='Whether or not to use the merging functionality (dont)')
+    parser.add_argument('--merge_labels', default=False, help='Whether or not to use the merging functionality (don't)')
     return parser.parse_args()
 
 if __name__ == "__main__":

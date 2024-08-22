@@ -18,7 +18,7 @@ python train.py --train_coords <coordinate_file_path.npy> --data_volumes <raw_im
 ```
 
 Importantly, label_volumes is NOT the partition volume generated earlier, it is the original label volume that was produced. The checkpoints should be a directory where you want the models saved as train.py runs. There are additional hyperparameters that can be altered; see the Google ffn github for more information. 
-Once training has been completed, you must select a model to use for inference. The trained models are saved every 500,000 training iterations (this can be altered at line 271). They are named like <seedID>_<number_of_iterations>.pkl. The highest number of iterations will generally be the best trained and should be selected for use during inference.
+Once training has been completed, you must select a model to use for inference. The trained models are saved every 500,000 training iterations (this can be altered at line 271). They are named like <seed_ID>_<number_of_iterations>.pkl. The highest number of iterations will generally be the best trained and should be selected for use during inference.
 
 ---
 ## Inference

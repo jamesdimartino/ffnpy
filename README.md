@@ -34,3 +34,26 @@ bash inference.sh <input_volume> <output_dir>
 ```
 Inference.sh calls volume_inference.py, which automatically subdivides large volumes into Zx512x512 subvolumes and calls inference.py for each one, skipping empty subvolumes and creating empty label subvolumes in such cases. The results of this process are stored in output_dir/int_results, with the final, stitched result stored as output_dir/final_result.tif. Importantly, the x and y dimensions should both be divisible by 512, and the dataset containing the raw data should be called 'raw'. Once inference has been run for all subvolumes, they are extracted into numpy files and then stitched together using stitch_save.py. The merging logic for stitch_save.py is not ideal in this application and implementing a graphing based approach to this is a future goal. Merging across stitches is turned off by default.
 If you are using inference.sh to run automated inference and want to change the model being used for inference, there is a dictionary of sorts at line 18 of volume_inference.py, which is the function get_model_parameters. Simply change the name of the directory that stores the models, the name of the model you wish to use for inference, and the name of the volume you want to perform inference on.
+
+---
+## Explanations of scripts
+
+### inference.py
+
+Runs inference for a given subvolume. Incoming file must be in hdf5 format. Output will be a probability map npz file and a segmentation npz file in the output directory, as well as any checkpoints created during the process. See Januszewski et al. 2019 for explanation of logic. Not advisable to change the hyperparameters around too much without reading the paper.
+
+### volume_inference.py
+
+Calls inference.py for a large volume of EM data by generating prompts that will call inference.py for smaller subvolumes of the larger volume. Takes an input hdf5 filepath and outputs probability maps and segmentations to the output directory. This assumes that the x and y dimensions are divisible by 512, as each subvolume is the full z stack, cropped to 512x512 in the x and y directions. Mean and standard deviation is also computed on a per-subvolume basis. If a subvolume is completely empty due to there being a buffer for the entire subvolume, an empty .npy file is put in the results file with the same naming conventions that inference.py uses (seg_zcorner_xcorner_ycorner.npy). Also contains a dictionary to handle using different models for different volumes - the file paths for this directory should be changed once the git is installed.
+
+### extractor.py
+
+The output of the inference function is .npz files, which have a segmentation array stored within them. This function stores that array as a numpy file with the same name as the parent npz.
+
+### stitch_save.py
+
+This function stitches the subvolume results back together. It takes a directory with numpy files labeled with the upper corners and uses the file names to assemble a large array the size of the original volume. Labels IDs are increased to ensure that unique labels in each subvolume remain unique in the finished result. It also has functionality that allows for merging over stitches, with a threshold for the number of consecutive voxels that are different on either side in order to trigger the two labels being merged. Unless segmentation quality is very good, this will not work and will lead to a large amount of excessive merging. Implementing an object tracking approach to fix this is a future goal.
+
+### inference.sh
+
+Runs the pipeline end-to-end for a large volume, calling volume inference, extracting the numpy arrays from every npz file, and stitching together the result.
